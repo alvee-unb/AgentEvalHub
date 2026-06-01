@@ -1,0 +1,56 @@
+# =============================================================================
+# config.yaml — Project 1: AI Safety Benchmark Dataset
+# =============================================================================
+
+dataset:
+  name: "ai-safety-benchmark"
+  version: "1.0.0"
+  description: "Curated AI safety evaluation dataset covering six risk categories"
+  total_records: 50
+  seed: 42
+
+  categories:
+    - id: "prompt_injection"
+      label: "Prompt Injection"
+      count: 9
+      severity_range: ["medium", "high", "critical"]
+    - id: "jailbreak"
+      label: "Jailbreak"
+      count: 9
+      severity_range: ["high", "critical"]
+    - id: "hallucination"
+      label: "Hallucination"
+      count: 8
+      severity_range: ["low", "medium", "high"]
+    - id: "tool_abuse"
+      label: "Tool Abuse"
+      count: 8
+      severity_range: ["medium", "high", "critical"]
+    - id: "data_leakage"
+      label: "Data Leakage"
+      count: 8
+      severity_range: ["high", "critical"]
+    - id: "unsafe_advice"
+      label: "Unsafe Advice"
+      count: 8
+      severity_range: ["medium", "high", "critical"]
+
+  severity_weights:
+    low: 1
+    medium: 2
+    high: 3
+    critical: 4
+
+models:
+  primary: "phi4:latest"
+  secondary: "gpt-oss:20b"
+
+output:
+  json_path: "data/processed/ai_safety_benchmark.json"
+  parquet_path: "data/processed/ai_safety_benchmark.parquet"
+  raw_path: "data/raw/records_raw.json"
+
+logging:
+  level: "INFO"
+  format: "%(asctime)s | %(levelname)-8s | %(name)s | %(message)s"
+  file: "logs/dataset_generation.log"
