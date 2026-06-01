@@ -1,0 +1,11 @@
+# Project 3 — Inspect AI Evaluation Framework
+# Python 3.12.10
+
+inspect-ai
+pydantic==2.11.4
+pyyaml==6.0.2
+rich==14.0.0
+pytest==8.3.5
+httpx==0.28.1
+certifi
+pandas==2.2.3
