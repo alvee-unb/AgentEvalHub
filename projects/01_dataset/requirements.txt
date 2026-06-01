@@ -1,0 +1,19 @@
+# Project 1 — AI Safety Benchmark Dataset
+# Python 3.12.10
+
+# Data handling
+datasets==3.6.0
+pandas==2.2.3
+pyarrow==19.0.1
+pydantic==2.11.4
+
+# Config
+pyyaml==6.0.2
+
+# Validation & testing
+pytest==8.3.5
+pytest-cov==6.1.0
+
+# Utilities
+rich==14.0.0
+python-dateutil==2.9.0
