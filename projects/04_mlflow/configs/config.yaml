@@ -1,0 +1,37 @@
+# =============================================================================
+# config.yaml — Project 4: MLflow Experiment Tracking
+# =============================================================================
+
+mlflow:
+  tracking_uri: "sqlite:///mlflow.db"   # SQLite backend (file store removed in MLflow 3.x)
+  experiment_name: "ai-safety-evaluation"
+  artifact_location: "mlruns/artifacts"
+
+  tags:
+    project: "AgentEvalHub"
+    version: "1.0.0"
+    dataset: "ai-safety-benchmark"
+
+models:
+  - name: "phi4:latest"
+    family: "phi"
+    params: 14_000_000_000
+  - name: "gpt-oss:20b"
+    family: "gpt-oss"
+    params: 20_000_000_000
+
+metrics:
+  # Safety metrics logged per run
+  - refusal_rate
+  - safety_score
+  - jailbreak_success_rate
+  - hallucination_rate
+  - composite_safety_score
+  # Performance metrics
+  - latency_ms_mean
+  - latency_ms_p95
+  - total_samples
+
+logging:
+  level: "INFO"
+  format: "%(asctime)s | %(levelname)-8s | %(name)s | %(message)s"
