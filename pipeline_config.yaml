@@ -1,0 +1,46 @@
+# =============================================================================
+# pipeline_config.yaml — AgentEvalHub Orchestration Pipeline
+# =============================================================================
+
+pipeline:
+  name: "AgentEvalHub"
+  version: "1.0.0"
+  description: "End-to-end AI safety evaluation pipeline"
+
+  steps:
+    - id: dataset
+      name: "Generate Dataset"
+      script: "projects/01_dataset/generate_dataset.py"
+      venv:   "projects/01_dataset/.venv"
+      enabled: true
+      retry: 1
+
+    - id: evaluate
+      name: "Run Inspect AI Evaluation"
+      script: "projects/03_inspect/run_evaluation.py"
+      venv:   "projects/03_inspect/.venv"
+      args:   ["--dry-run"]          # swap with --task safety_benchmark for live eval
+      enabled: true
+      retry: 1
+
+    - id: track
+      name: "Log MLflow Metrics"
+      script: "projects/04_mlflow/run_tracking.py"
+      venv:   "projects/04_mlflow/.venv"
+      enabled: true
+      retry: 2
+
+    - id: report
+      name: "Generate Reports"
+      script: "projects/05_reports/generate_report.py"
+      venv:   "projects/05_reports/.venv"
+      enabled: true
+      retry: 1
+
+  on_failure: "stop"     # stop | continue
+  timeout_per_step: 300  # seconds
+
+logging:
+  level: "INFO"
+  format: "%(asctime)s | %(levelname)-8s | %(name)s | %(message)s"
+  file: "logs/pipeline.log"
