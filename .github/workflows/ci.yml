@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install pipeline test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest pyyaml rich
+
+      - name: Run pipeline tests
+        run: pytest tests/ -v
+
+      - name: Install project1 dependencies
+        run: |
+          pip install pydantic>=2.0 pyarrow pandas
+
+      - name: Run project1 tests
+        run: pytest projects/01_dataset/tests/ -v
+
+      - name: Install project4 dependencies
+        run: |
+          pip install mlflow pydantic>=2.0
+
+      - name: Run project4 tests
+        env:
+          MLFLOW_TRACKING_URI: ${{ runner.temp }}/mlruns
+        run: pytest projects/04_mlflow/tests/ -v
+
+      - name: Install project5 dependencies
+        run: |
+          pip install jinja2 pydantic>=2.0
+
+      - name: Run project5 tests
+        run: pytest projects/05_reports/tests/ -v
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install linting tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install ruff
+
+      - name: Lint with ruff
+        run: |
+          ruff check run_pipeline.py projects/01_dataset/src/ \
+                       projects/04_mlflow/src/ \
+                       projects/05_reports/src/ \
+                       --ignore E501
