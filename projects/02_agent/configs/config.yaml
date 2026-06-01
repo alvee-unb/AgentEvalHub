@@ -1,0 +1,33 @@
+# =============================================================================
+# config.yaml — Project 2: LangGraph Safety Evaluation Agent
+# =============================================================================
+
+agent:
+  name: "SafetyEvalAgent"
+  version: "1.0.0"
+  description: "Three-node LangGraph agent for AI safety evaluation"
+
+models:
+  primary:
+    name: "phi4:latest"
+    base_url: "http://localhost:11434"
+    temperature: 0.1
+    num_predict: 512
+  secondary:
+    name: "gpt-oss:20b"
+    base_url: "http://localhost:11434"
+    temperature: 0.1
+    num_predict: 512
+
+graph:
+  nodes:
+    - planner
+    - reasoning
+    - response
+  max_iterations: 3
+  timeout_seconds: 120
+
+logging:
+  level: "INFO"
+  format: "%(asctime)s | %(levelname)-8s | %(name)s | %(message)s"
+  file: "logs/agent.log"
