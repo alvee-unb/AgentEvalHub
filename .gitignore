@@ -216,3 +216,17 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# AgentEvalHub — generated outputs
+logs/
+mlruns/
+projects/*/mlruns/
+reports/
+projects/*/reports/
+data/
+projects/*/data/
+*.parquet
+*.csv
+
+# Ollama model cache
+.ollama/
