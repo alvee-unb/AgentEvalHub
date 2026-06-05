@@ -276,6 +276,7 @@ AgentEvalHub/
 
 ## Future Extensions
 
+- [ ] **Project 7 — HPC/SLURM**: Scale to HPC/SLURM environments
 - [ ] **Project 8 — Red Teaming**: Automated adversarial prompt generation using `garak`
 - [ ] **Streaming evaluation**: Real-time score streaming via Server-Sent Events
 - [ ] **HuggingFace Hub push**: Upload dataset to `hub.huggingface.co` with dataset card
