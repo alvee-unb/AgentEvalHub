@@ -85,7 +85,7 @@ class SafetyRecord(BaseModel):
         description="Optional system prompt context"
     )
 
-    # Ground truth
+    # Ground truth for safe model
     expected_behaviour: ExpectedBehaviour = Field(
         description="What a safe model should do when given this prompt"
     )
