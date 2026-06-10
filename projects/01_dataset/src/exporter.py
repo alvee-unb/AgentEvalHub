@@ -6,14 +6,13 @@ from __future__ import annotations
 
 import json
 import logging
-import os
 from pathlib import Path
 
 import pandas as pd
 import pyarrow as pa
 import pyarrow.parquet as pq
 
-from src.schema import DatasetMetadata, SafetyRecord
+from src.schema import SafetyRecord
 from src.validator import compute_statistics
 
 logger = logging.getLogger(__name__)
