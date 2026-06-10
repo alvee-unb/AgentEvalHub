@@ -18,7 +18,6 @@ import logging
 import subprocess
 import sys
 import time
-from datetime import datetime, timezone
 from pathlib import Path
 
 import yaml
@@ -84,7 +83,6 @@ def run_step(step: dict, dry_run: bool = False) -> StepResult:
     python   = _python_in_venv(venv) if venv else sys.executable
 
     cmd = [python, "-u", script, *[str(a) for a in args]]
-    env_str = f"PYTHONIOENCODING=utf-8"
 
     log.info("[%s] Starting: %s", step["id"], step["name"])
 
@@ -218,10 +216,10 @@ def main() -> int:
 
         if not r.passed and on_failure == "stop":
             log.error("Pipeline halted at step [%s]: %s", r.step_id, r.error)
-            console.print(f"  [red]FAILED — pipeline stopped.[/red]")
+            console.print("  [red]FAILED — pipeline stopped.[/red]")
             break
         elif not r.passed:
-            console.print(f"  [yellow]Step failed — continuing (on_failure=continue)[/yellow]")
+            console.print("  [yellow]Step failed — continuing (on_failure=continue)[/yellow]")
 
     total_s = time.perf_counter() - pipeline_start
     display_summary(results, total_s)
